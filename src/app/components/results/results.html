@@ -1,1 +1,8 @@
-<p>results works!</p>
+<div class="results-container" *ngIf="musics.length > 0">
+    <h2>Resultados</h2>
+
+    <div class="music-card" *ngFor="let music of musics">
+        <h3>{{ music.title }}</h3>
+        <p>{{ music.artist }}</p>
+    </div>
+</div>

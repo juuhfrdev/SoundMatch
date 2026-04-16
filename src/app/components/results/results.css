@@ -1,0 +1,30 @@
+.results-container {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.results-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: white;
+}
+
+.music-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 15px;
+  color: white;
+  transition: 0.2s;
+}
+
+.music-card:hover {
+  border-color: #1f6feb;
+  box-shadow: 0 0 10px #1f6feb33;
+}
+
+.music-card h3 {
+  margin-bottom: 8px;
+}
