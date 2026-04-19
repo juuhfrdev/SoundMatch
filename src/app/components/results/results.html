@@ -1,8 +1,18 @@
-<div class="results-container" *ngIf="musics.length > 0">
+<div class="results-container">
+    @if (musics.length > 0) {
     <h2>Resultados</h2>
 
-    <div class="music-card" *ngFor="let music of musics">
+    @for (music of musics; track $index) {
+    <div class="music-card">
         <h3>{{ music.title }}</h3>
         <p>{{ music.artist }}</p>
+
+        @if (music.preview) {
+        <audio controls>
+            <source [src]="music.preview" type="audio/mpeg">
+        </audio>
+        }
     </div>
+    }
+    }
 </div>

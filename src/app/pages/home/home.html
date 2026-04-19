@@ -1,18 +1,18 @@
-<header>
-  <nav>
-    <img src="assets/Logo-soundmatch.png" alt="Logo">
+<app-header></app-header>
 
-    <div>
-      <a href="#">Home</a>
-      <a href="#">Sobre</a>
-    </div>
-  </nav>
-</header>
-
-<main>
+<section class="main">
   <h1>Descubra músicas que combinam com você</h1>
+  <p class="subtitle">Encontre novas faixas que dão match com sua música favorita.</p>
 
   <app-search (onSearch)="handleSearch($event)"></app-search>
 
-  <app-results [musics]="musics"></app-results>
-</main>
+  @if (loading) {
+  <p class="loading-text">Buscando músicas...</p>
+  }
+
+  @if (errorMessage) {
+  <p class="error-text">{{ errorMessage }}</p>
+  }
+
+  <app-results [musics]="musics" [loading]="loading"></app-results>
+</section>

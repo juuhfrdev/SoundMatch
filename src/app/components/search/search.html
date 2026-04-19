@@ -1,5 +1,7 @@
 <div class="search-container">
-    <input type="text" placeholder="Digite o nome da música" [(ngModel)]="query">
+    <input #input type="text" placeholder="Digite o nome da música" (keyup.enter)="search(input.value)">
 
-    <button (click)="search()">Buscar</button>
+    <button type="button" (mousedown)="search(input.value); $event.preventDefault()">
+        Buscar
+    </button>
 </div>

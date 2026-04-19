@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-results',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './results.html',
   styleUrl: './results.css',
 })
 export class ResultsComponent {
   @Input() musics: any[] = [];
+  @Input() loading: boolean = false;
 }
