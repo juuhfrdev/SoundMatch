@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs/operators';
 
@@ -18,29 +18,37 @@ export class HomeComponent {
   loading: boolean = false;
   errorMessage: string = '';
 
-  constructor(private musicService: MusicService) {}
+  constructor(
+    private musicService: MusicService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   handleSearch(query: string) {
-    
-  console.log('HOME recebeu no primeiro clique:', query);
+    this.loading = true;
+    this.errorMessage = '';
+    this.musics = [];
+    this.cdr.detectChanges();
 
-  this.loading = true;
-  this.errorMessage = '';
-
-  this.musicService.searchMusic(query)
-    .pipe(finalize(() => this.loading = false))
-    .subscribe({
-      next: (response) => {
-        this.musics = response.data.map((item: any) => ({
-          title: item.title,
-          artist: item.artist.name,
-          preview: item.preview
-        }));
-      },
-      error: (error) => {
-        console.error('ERRO NA API:', error);
-        this.errorMessage = 'Não foi possível buscar músicas agora.';
-      }
-    });
-}
+    this.musicService.searchMusic(query)
+      .pipe(finalize(() => {
+        this.loading = false;
+        this.cdr.detectChanges();
+      }))
+      .subscribe({
+        next: (response) => {
+          this.musics = response.data.map((item: any) => ({
+                title: item.title,
+                artist: item.artist.name,
+                preview: item.preview,
+                cover: item.album?.cover_medium
+              }));
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('ERRO NA API:', error);
+          this.errorMessage = 'Não foi possível buscar músicas agora.';
+          this.cdr.detectChanges();
+        }
+      });
+  }
 }

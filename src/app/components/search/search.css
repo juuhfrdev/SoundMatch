@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-/*INPUT*/
+/* INPUT */
 .search-container input {
   width: 360px;
   max-width: 100%;
@@ -24,13 +24,14 @@
 .search-container input::placeholder {
   color: #C8ACD6;
 }
-/*BRILHO INPUT*/
+
+/* BRILHINHO */
 .search-container input:focus {
   border-color: #C8ACD6;
   box-shadow: 0 0 0 3px rgba(200, 172, 214, 0.12);
 }
 
-/*BUTTON*/
+/* BUTTON */
 .search-container button {
   padding: 12px 28px;
   border: none;
@@ -44,6 +45,12 @@
 }
 
 .search-container button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(67, 61, 139, 0.35);
+  transform: none;
+  box-shadow: none;
+}
+
+/*BUTTON DESABILITADO*/
+.search-container button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

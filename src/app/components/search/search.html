@@ -1,7 +1,7 @@
 <div class="search-container">
     <input #input type="text" placeholder="Digite o nome da música" (keyup.enter)="search(input.value)">
 
-    <button type="button" (mousedown)="search(input.value); $event.preventDefault()">
-        Buscar
+    <button type="button" (click)="search(input.value)" [disabled]="loading">
+        {{ loading ? 'Buscando...' : 'Buscar' }}
     </button>
 </div>

@@ -7,6 +7,7 @@
     linear-gradient(180deg, #17153B 0%, #1d1a49 35%, #2E236C 100%);
 }
 
+
 .loading-text {
   margin-top: 20px;
   color: #C8ACD6;
@@ -19,7 +20,6 @@
   text-align: center;
 }
 
-/* MAIN */
 .main {
   min-height: calc(100vh - 90px);
   display: flex;

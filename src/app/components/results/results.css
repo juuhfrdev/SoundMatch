@@ -7,22 +7,16 @@
 .results-container h2 {
   margin-bottom: 22px;
   color: #ffffff;
+  text-align: left;
 }
 
-.loading-text {
-  margin-top: 30px;
-  text-align: center;
-  color: #C8ACD6;
-  font-size: 16px;
-}
-
+/*CARD*/
 .music-card {
   background: rgba(23, 21, 59, 0.78);
   border: 1px solid rgba(200, 172, 214, 0.18);
   border-radius: 16px;
   padding: 18px;
   margin-bottom: 16px;
-  text-align: left;
   transition: 0.25s ease;
   backdrop-filter: blur(5px);
 }
@@ -33,13 +27,55 @@
   transform: translateY(-2px);
 }
 
-.music-card h3 {
+.music-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.music-info img {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.music-text {
+  text-align: left;
+}
+
+.music-text h3 {
   color: #ffffff;
   font-size: 1rem;
   margin-bottom: 6px;
 }
 
-.music-card p {
+.music-text p {
   color: #C8ACD6;
   font-size: 0.95rem;
+}
+
+/*PREVIEW DA MUSICA*/
+.music-card audio {
+  width: 100%;
+  margin-top: 8px;
+  border-radius: 12px;
+}
+
+/*RESPONSIVIDADE*/
+@media (max-width: 600px) {
+  .music-info {
+    align-items: flex-start;
+  }
+
+  .music-info img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .results-container h2 {
+    text-align: center;
+  }
 }

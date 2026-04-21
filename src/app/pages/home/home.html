@@ -4,7 +4,8 @@
   <h1>Descubra músicas que combinam com você</h1>
   <p class="subtitle">Encontre novas faixas que dão match com sua música favorita.</p>
 
-  <app-search (onSearch)="handleSearch($event)"></app-search>
+  <app-search (onSearch)="handleSearch($event)" [loading]="loading">
+  </app-search>
 
   @if (loading) {
   <p class="loading-text">Buscando músicas...</p>

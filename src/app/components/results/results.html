@@ -4,8 +4,38 @@
 
     @for (music of musics; track $index) {
     <div class="music-card">
-        <h3>{{ music.title }}</h3>
-        <p>{{ music.artist }}</p>
+        <div class="music-info">
+            <img [src]="music.cover" [alt]="music.title">
+
+            <div class="music-text">
+                <h3>{{ music.title }}</h3>
+                <p>{{ music.artist }}</p>
+            </div>
+        </div>
+
+        @if (music.preview) {
+        <audio controls>
+            <source [src]="music.preview" type="audio/mpeg">
+        </audio>
+        }
+    </div>
+    }
+    }
+</div>
+<div class="results-container">
+    @if (musics.length > 0) {
+    <h2>Resultados</h2>
+
+    @for (music of musics; track $index) {
+    <div class="music-card">
+        <div class="music-info">
+            <img [src]="music.cover" [alt]="music.title">
+
+            <div class="music-text">
+                <h3>{{ music.title }}</h3>
+                <p>{{ music.artist }}</p>
+            </div>
+        </div>
 
         @if (music.preview) {
         <audio controls>
