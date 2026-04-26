@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './results.css',
 })
 export class ResultsComponent {
-  @Input() musics: any[] = [];
+  @Input() originalMusic: any = null;
+  @Input() recommendedMusic: any = null;
   @Input() loading: boolean = false;
 }

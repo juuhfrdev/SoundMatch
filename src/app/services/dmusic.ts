@@ -10,8 +10,13 @@ export class MusicService {
 
   searchMusic(query: string) {
     const url = `https://corsproxy.io/?https://api.deezer.com/search?q=${encodeURIComponent(query)}`;
-    console.log('URL DA REQUISIÇÃO:', url);
+    return this.http.get<any>(url).pipe(
+      timeout(10000)
+    );
+  }
 
+  searchArtistTracks(artistName: string) {
+    const url = `https://corsproxy.io/?https://api.deezer.com/search?q=${encodeURIComponent(`artist:"${artistName}"`)}`;
     return this.http.get<any>(url).pipe(
       timeout(10000)
     );

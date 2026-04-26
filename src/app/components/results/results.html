@@ -1,48 +1,37 @@
 <div class="results-container">
-    @if (musics.length > 0) {
-    <h2>Resultados</h2>
+    @if (originalMusic && recommendedMusic) {
+    <h2>Match encontrado 🎧</h2>
 
-    @for (music of musics; track $index) {
-    <div class="music-card">
-        <div class="music-info">
-            <img [src]="music.cover" [alt]="music.title">
+    <div class="match-container">
+        <div class="music-card">
+            <p class="label">Você buscou</p>
 
-            <div class="music-text">
-                <h3>{{ music.title }}</h3>
-                <p>{{ music.artist }}</p>
-            </div>
+            <img [src]="originalMusic.cover" [alt]="originalMusic.title">
+
+            <h3>{{ originalMusic.title }}</h3>
+            <p>{{ originalMusic.artist }}</p>
+
+            @if (originalMusic.preview) {
+            <audio controls>
+                <source [src]="originalMusic.preview" type="audio/mpeg">
+            </audio>
+            }
         </div>
 
-        @if (music.preview) {
-        <audio controls>
-            <source [src]="music.preview" type="audio/mpeg">
-        </audio>
-        }
-    </div>
-    }
-    }
-</div>
-<div class="results-container">
-    @if (musics.length > 0) {
-    <h2>Resultados</h2>
+        <div class="music-card">
+            <p class="label">Recomendamos</p>
 
-    @for (music of musics; track $index) {
-    <div class="music-card">
-        <div class="music-info">
-            <img [src]="music.cover" [alt]="music.title">
+            <img [src]="recommendedMusic.cover" [alt]="recommendedMusic.title">
 
-            <div class="music-text">
-                <h3>{{ music.title }}</h3>
-                <p>{{ music.artist }}</p>
-            </div>
+            <h3>{{ recommendedMusic.title }}</h3>
+            <p>{{ recommendedMusic.artist }}</p>
+
+            @if (recommendedMusic.preview) {
+            <audio controls>
+                <source [src]="recommendedMusic.preview" type="audio/mpeg">
+            </audio>
+            }
         </div>
-
-        @if (music.preview) {
-        <audio controls>
-            <source [src]="music.preview" type="audio/mpeg">
-        </audio>
-        }
     </div>
-    }
     }
 </div>
