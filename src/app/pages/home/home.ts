@@ -77,7 +77,7 @@ export class HomeComponent {
               }
 
               const randomIndex = Math.floor(Math.random() * filtered.length);
-              const rec = filtered[randomIndex];
+              const rec = filtered[randomIndex]; //faz procurar sempre uma musica diferente
 
               this.recommendedMusic = {
                 title: rec.title,

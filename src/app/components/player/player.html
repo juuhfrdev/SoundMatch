@@ -1,0 +1,11 @@
+<div class="audio-player">
+    <button class="play-btn" type="button" (click)="togglePlay()">
+        {{ isPlaying ? '⏸' : '▶' }}
+    </button>
+
+    <input type="range" min="0" [max]="duration" [value]="currentTime" (input)="seek($event)">
+
+    <span class="time">
+        {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+    </span>
+</div>

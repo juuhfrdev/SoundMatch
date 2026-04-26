@@ -12,9 +12,7 @@
             <p>{{ originalMusic.artist }}</p>
 
             @if (originalMusic.preview) {
-            <audio controls>
-                <source [src]="originalMusic.preview" type="audio/mpeg">
-            </audio>
+            <app-player [previewUrl]="originalMusic.preview"></app-player>
             }
         </div>
 
@@ -27,9 +25,7 @@
             <p>{{ recommendedMusic.artist }}</p>
 
             @if (recommendedMusic.preview) {
-            <audio controls>
-                <source [src]="recommendedMusic.preview" type="audio/mpeg">
-            </audio>
+            <app-player [previewUrl]="recommendedMusic.preview"></app-player>
             }
         </div>
     </div>
