@@ -30,6 +30,11 @@ export class MusicService {
    return this.http.get<any>(url).pipe(timeout(10000));
 }
 
+  getGenreTracks(genreId: number) {
+    const url = `${this.proxyUrl}https://api.deezer.com/chart/${genreId}/tracks`;
+    return this.http.get<any>(url).pipe(timeout(10000));
+}
+
   searchArtistTracks(artistName: string) {
     const url = `${this.proxyUrl}https://api.deezer.com/search?q=${encodeURIComponent(`artist:"${artistName}"`)}`;
     return this.http.get<any>(url).pipe(timeout(10000));

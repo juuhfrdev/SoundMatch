@@ -1,11 +1,12 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { finalize, switchMap, map } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
 
 import { SearchComponent } from '../../components/search/search';
 import { ResultsComponent } from '../../components/results/results';
 import { MusicService } from '../../services/dmusic';
+import { LastfmService } from '../../services/lastfm';
 import { Header } from '../../components/header/header';
 
 @Component({
@@ -23,6 +24,7 @@ export class HomeComponent {
 
   constructor(
     private musicService: MusicService,
+    private LastfmService:  LastfmService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -36,6 +38,8 @@ export class HomeComponent {
     this.cdr.detectChanges();
 
     this.musicService.searchMusic(query).pipe(
+
+      // 1. Busca a música digitada no Deezer
       switchMap((response) => {
         if (!response?.data || response.data.length === 0) {
           this.errorMessage = 'Nenhuma música encontrada.';
@@ -51,97 +55,94 @@ export class HomeComponent {
           cover: baseMusic.album?.cover_medium
         };
 
-        const originalArtist = baseMusic.artist.name.toLowerCase();
-        const albumId = baseMusic.album?.id;
+        const originalArtist = baseMusic.artist.name;
+        const originalTitle = baseMusic.title;
 
-        if (!albumId) {
-          this.errorMessage = 'Não consegui identificar o álbum.';
-          return of(null);
-        }
-
-        return this.musicService.getAlbum(albumId).pipe(
-          map(albumResponse => ({
-            albumResponse,
-            originalArtist
+        // 2. Busca músicas parecidas no Last.fm
+        return this.LastfmService.getSimilarTracks(originalTitle, originalArtist).pipe(
+          map((lastfmResponse) => ({
+            lastfmResponse,
+            originalArtist: originalArtist.toLowerCase(),
+            originalTitle: originalTitle.toLowerCase()
           }))
         );
       }),
 
-  switchMap((data) => {
-  if (!data) return of(null);
+      // 3. Pega recomendações do Last.fm e procura no Deezer para ter preview/capa
+      switchMap((data) => {
+        if (!data) return of(null);
 
-    const genreName = data.albumResponse?.genres?.data?.[0]?.name;
+        const similarTracks = [...(data.lastfmResponse?.similartracks?.track || [])].sort(() => Math.random() - 0.5);
 
-    if (!genreName) {
-      this.errorMessage = 'Não consegui identificar o gênero.';
-      return of(null);
-    }
-
-    const genreSearchTerms: any = {
-      'Alternative': 'indie rock alternative',
-      'Pop': 'pop hits',
-      'Rock': 'rock band',
-      'Rap/Hip Hop': 'hip hop rap',
-      'R&B': 'rnb soul',
-      'Electronic': 'electronic dance',
-      'Dance': 'dance pop',
-      'Metal': 'metal rock',
-      'Indie': 'indie alternative',
-      'Jazz': 'jazz',
-      'Soul & Funk': 'soul funk',
-      'Reggae': 'reggae',
-      'Latin Music': 'latin pop',
-      'Country': 'country music',
-      'Classical': 'classical music'
-    };
-
-    const searchTerm = genreSearchTerms[genreName] || genreName;
-
-    return this.musicService.searchMusic(searchTerm).pipe(
-      map(genreResponse => ({
-        genreResponse,
-        originalArtist: data.originalArtist
-      }))
-    );
-  }),
-
-      map((data) => {
-        if (!data) return null;
-
-        const candidates = data.genreResponse.data.filter((item: any) =>
-          item.artist.name.toLowerCase() !== data.originalArtist &&
-          item.preview
-        );
-
-        if (candidates.length === 0) {
-          this.errorMessage = 'Nenhuma recomendação encontrada.';
-          return null;
+        if (similarTracks.length === 0) {
+          this.errorMessage = 'Nenhuma música parecida encontrada no Last.fm.';
+          return of(null);
         }
 
-        const randomIndex = Math.floor(Math.random() * candidates.length);
-        return candidates[randomIndex];
+        return from(similarTracks).pipe(
+          switchMap((track: any) => {
+            const trackName = track.name;
+            const artistName = track.artist?.name;
+
+            if (!trackName || !artistName) {
+              return of(null);
+            }
+
+            const searchQuery = `${trackName} ${artistName}`;
+
+            return this.musicService.searchMusic(searchQuery).pipe(
+              map((deezerResponse) => {
+                const result = deezerResponse?.data?.find((music: any) => {
+                  const sameTitle =
+                    music.title.toLowerCase() === data.originalTitle;
+
+                    const sameArtist =
+                    music.artist.name.toLowerCase() === data.originalArtist;
+
+                    const sameRecommended =
+                    this.recommendedMusic &&
+                    music.title.toLowerCase() === this.recommendedMusic.title.toLowerCase() &&
+                    music.artist.name.toLowerCase() === this.recommendedMusic.artist.toLowerCase();
+
+                    return !sameTitle && !sameArtist && !sameRecommended && music.preview;
+                  });
+
+                return result || null;
+              })
+            );
+          }),
+          map((result) => result),
+        );
+      }),
+
+      // 4. Filtra o primeiro resultado válido com preview
+      map((rec) => {
+        if (!rec) return null;
+
+        return {
+          title: rec.title,
+          artist: rec.artist.name,
+          preview: rec.preview,
+          cover: rec.album?.cover_medium
+        };
       }),
 
       finalize(() => {
         this.loading = false;
         this.cdr.detectChanges();
       })
+
     ).subscribe({
       next: (rec) => {
-        if (!rec) return;
+        if (!rec || this.recommendedMusic) return;
 
-        this.recommendedMusic = {
-          title: rec.title,
-          artist: rec.artist.name,
-          preview: rec.preview,
-          cover: rec.album?.cover_medium
-        };
-
+        this.recommendedMusic = rec;
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
         this.errorMessage = 'Erro ao gerar recomendação.';
+        this.cdr.detectChanges();
       }
     });
   }
