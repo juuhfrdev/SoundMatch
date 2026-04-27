@@ -5,6 +5,7 @@ import { of, from } from 'rxjs';
 
 import { SearchComponent } from '../../components/search/search';
 import { ResultsComponent } from '../../components/results/results';
+import { Player } from '../../components/player/player';
 import { MusicService } from '../../services/dmusic';
 import { LastfmService } from '../../services/lastfm';
 import { Header } from '../../components/header/header';
@@ -22,6 +23,8 @@ export class HomeComponent {
   loading: boolean = false;
   errorMessage: string = '';
 
+  lastQuery: string = '';
+
   constructor(
     private musicService: MusicService,
     private LastfmService:  LastfmService,
@@ -31,10 +34,13 @@ export class HomeComponent {
   handleSearch(query: string) {
     if (!query.trim()) return;
 
+    Player.stopCurrentPlayer();
+
     this.loading = true;
     this.errorMessage = '';
     this.originalMusic = null;
     this.recommendedMusic = null;
+    this.lastQuery = query;
     this.cdr.detectChanges();
 
     this.musicService.searchMusic(query).pipe(
@@ -145,5 +151,10 @@ export class HomeComponent {
         this.cdr.detectChanges();
       }
     });
+  }
+  handleRecommendAgain() {
+    if (!this.lastQuery) return;
+
+    this.handleSearch(this.lastQuery);
   }
 }

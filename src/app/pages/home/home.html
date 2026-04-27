@@ -15,5 +15,6 @@
   <p class="error-text">{{ errorMessage }}</p>
   }
 
-  <app-results [originalMusic]="originalMusic" [recommendedMusic]="recommendedMusic"></app-results>
+  <app-results [originalMusic]="originalMusic" [recommendedMusic]="recommendedMusic"
+    (recommendAgain)="handleRecommendAgain()"></app-results>
 </section>

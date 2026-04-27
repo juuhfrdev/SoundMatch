@@ -62,6 +62,29 @@
   margin-bottom: 10px;
 }
 
+.results-container button{
+  padding: 12px 28px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #433D8B 0%, #6a5db4 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.results-container button:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(67, 61, 139, 0.4);
+}
+
+.results-container button:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @media (max-width: 600px) {
   .music-card img {
     height: 200px;
