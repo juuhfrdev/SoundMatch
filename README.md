@@ -1,59 +1,118 @@
-# Soundmatch
+# 🎧 SoundMatch
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.5.
+SoundMatch é uma aplicação web desenvolvida em Angular que recomenda músicas similares a partir de uma faixa informada pelo usuário.
 
-## Development server
+A aplicação utiliza APIs externas para gerar recomendações inteligentes e reproduzir previews das músicas em um player customizado.
 
-To start a local development server, run:
+---
+
+## 📸 Preview
+
+<p align="center">
+  <img src="assets/soundmatch-preview.gif" width="600">
+</p>
+
+---
+
+## 🚀 Funcionalidades
+
+- Busca de músicas pelo nome  
+- Recomendação automática de músicas similares  
+- Botão "Recomendar outra" sem nova busca  
+- Player de áudio customizado (play, pause, progresso)  
+- Controle de reprodução (apenas um player por vez)  
+- UI moderna com foco em experiência do usuário  
+
+---
+
+## 🧠 Como funciona
+
+1. O usuário digita o nome de uma música  
+2. A aplicação busca a faixa na API do Deezer  
+3. O sistema utiliza o Last.fm para encontrar músicas similares  
+4. Caso não encontre, utiliza fallback com músicas do mesmo artista  
+5. A recomendação é exibida com preview e capa  
+
+---
+
+## 🛠️ Tecnologias utilizadas
+
+- Angular  
+- TypeScript  
+- HTML5 & CSS3  
+
+### APIs:
+- Deezer API  
+- Last.fm API  
+
+---
+
+## 🎨 Design
+
+- Interface moderna  
+- Componentização com Angular  
+- Layout pensado para desktop e mobile  
+- Feedback visual com animações e estados de loading  
+
+---
+
+## 📂 Estrutura do projeto
+
+src/
+├── app/
+│ ├── components/
+│ │ ├── header/
+│ │ ├── search/
+│ │ ├── results/
+│ │ ├── player/
+│ │ └── footer/
+│ ├── pages/
+│ │ └── home/
+│ ├── services/
+│ │ ├── dmusic.ts
+│ │ └── lastfm.ts
+├──assets/
+
+---
+
+## ▶️ Como executar o projeto
 
 ```bash
-ng serve
+npm install
+ng serve -o
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## ⚠️ Observações
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Algumas músicas podem não possuir preview disponível  
+- O Last.fm pode apresentar limitações com músicas brasileiras (como sertanejo e samba)  
+- Foi implementado um fallback utilizando o Deezer para melhorar a qualidade das recomendações  
+- Nesses casos, são recomendadas outras músicas do mesmo artista 
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 👩‍💻 Autor
 
-```bash
-ng generate --help
-```
+**Julia Freire**
 
-## Building
+- GitHub: https://github.com/juuhfrdev  
+- LinkedIn: https://www.linkedin.com/in/julia-freire-de-souza/  
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## 💡 Melhorias futuras
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Melhorar o algoritmo de recomendação  
+- Adicionar sistema de favoritos  
+- Adicionar sistema de integração direta com plataformas de áudio
+- Integração com novas APIs de música  
+- Melhorar ainda mais a experiência so usuário 
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 🌐 Demo
+Acesse em:
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+*em breve*
