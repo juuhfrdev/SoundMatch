@@ -17,6 +17,8 @@ export class Player implements OnChanges, OnDestroy {
   currentTime = 0;
   duration = 0;
 
+  animationFrameId: number | null = null;
+
   constructor(private cdr: ChangeDetectorRef) {
 
     // Atualiza a timeline enquanto a música toca
@@ -35,6 +37,9 @@ export class Player implements OnChanges, OnDestroy {
     this.audio.addEventListener('ended', () => {
       this.isPlaying = false;
       this.currentTime = 0;
+
+      // Para a atualização contínua da timeline
+      this.stopProgressUpdate();
 
       if (Player.currentPlayer === this) {
         Player.currentPlayer = null;
@@ -69,6 +74,43 @@ export class Player implements OnChanges, OnDestroy {
       this.cdr.detectChanges();
     }
   }
+  getProgressBackground(): string {
+  const progress = this.duration 
+    ? (this.currentTime / this.duration) * 100 
+    : 0;
+
+  return `linear-gradient(
+    90deg,
+    #4DA6FF 0%,
+    #6F7CFF ${progress}%,
+    rgba(255, 255, 255, 0.2) ${progress}%,
+    rgba(255, 255, 255, 0.2) 100%
+  )`;
+}
+
+  // Inicia a atualização contínua da timeline
+  startProgressUpdate() {
+    this.stopProgressUpdate();
+
+    const update = () => {
+      if (!this.audio.paused) {
+        this.currentTime = this.audio.currentTime;
+        this.cdr.detectChanges();
+
+        this.animationFrameId = requestAnimationFrame(update);
+      }
+    };
+
+    this.animationFrameId = requestAnimationFrame(update);
+  }
+
+  // Para a atualização contínua da timeline
+  stopProgressUpdate() {
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
+  }
 
   // Play / Pause
   togglePlay() {
@@ -89,6 +131,9 @@ export class Player implements OnChanges, OnDestroy {
       this.audio.play();
       this.isPlaying = true;
 
+      // Inicia a atualização da barra enquanto toca
+      this.startProgressUpdate();
+
       // Marca como player ativo
       Player.currentPlayer = this;
 
@@ -96,6 +141,9 @@ export class Player implements OnChanges, OnDestroy {
 
       this.audio.pause();
       this.isPlaying = false;
+
+      // Para a atualização da barra ao pausar
+      this.stopProgressUpdate();
 
       if (Player.currentPlayer === this) {
         Player.currentPlayer = null;
@@ -109,6 +157,10 @@ export class Player implements OnChanges, OnDestroy {
   stop() {
     this.audio.pause();
     this.isPlaying = false;
+
+    // Para a atualização da barra
+    this.stopProgressUpdate();
+
     this.cdr.detectChanges();
   }
 

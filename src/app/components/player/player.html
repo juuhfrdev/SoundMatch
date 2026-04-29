@@ -3,8 +3,8 @@
         {{ isPlaying ? '⏸' : '▶' }}
     </button>
 
-    <input type="range" min="0" [max]="duration" [value]="currentTime" (input)="seek($event)">
-
+    <input type="range" min="0" [max]="duration || 0" step="0.01" [value]="currentTime"
+        [style.background]="getProgressBackground()" (input)="seek($event)">
     <span class="time">
         {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
     </span>
