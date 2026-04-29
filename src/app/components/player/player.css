@@ -26,12 +26,10 @@
   cursor: pointer;
   transition: 0.25s ease;
 }
-
 .play-btn:hover {
   transform: scale(1.08);
   box-shadow: 0 0 12px rgba(77, 166, 255, 0.5);
 }
-
 .play-btn:active {
   transform: scale(1);
 }
@@ -60,4 +58,40 @@ input[type="range"]::-webkit-slider-thumb {
   color: #b8c1ff;
   min-width: 70px;
   text-align: right;
+}
+
+/*RESPONSIVIDADE*/
+@media (max-width: 600px) {
+  .audio-player {
+    width: 100%;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  input[type="range"] {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .time {
+    font-size: 11px;
+    min-width: 64px;
+  }
+}
+@media (max-width: 360px) {
+  .audio-player {
+    gap: 8px;
+  }
+
+  .play-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+  .time {
+    font-size: 10px;
+    min-width: 58px;
+  }
 }

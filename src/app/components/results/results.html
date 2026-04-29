@@ -6,7 +6,9 @@
         <div class="music-card">
             <p class="label">Você buscou</p>
 
-            <img [src]="originalMusic.cover" [alt]="originalMusic.title">
+            <div class="image-container">
+                <img [src]="originalMusic.cover" [alt]="originalMusic.title">
+            </div>
 
             <h3>{{ originalMusic.title }}</h3>
             <p>{{ originalMusic.artist }}</p>
@@ -19,7 +21,9 @@
         <div class="music-card">
             <p class="label">Recomendamos</p>
 
-            <img [src]="recommendedMusic.cover" [alt]="recommendedMusic.title">
+            <div class="image-container">
+                <img [src]="recommendedMusic.cover" [alt]="recommendedMusic.title">
+            </div>
 
             <h3>{{ recommendedMusic.title }}</h3>
             <p>{{ recommendedMusic.artist }}</p>

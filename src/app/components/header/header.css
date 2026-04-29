@@ -5,29 +5,52 @@ header {
   border-bottom: 1px solid rgba(200, 172, 214, 0.15);
 }
 
-/* 🔥 centraliza horizontalmente */
 nav {
   display: flex;
-  justify-content: center; /* 👈 ISSO CENTRALIZA */
+  justify-content: center;
   align-items: center;
 }
 
-/* logo + texto */
 .logo-container {
   display: flex;
   align-items: center;
   gap: 6px;
 }
-
-/* imagem */
 .logo-container img {
   height: 40px;
   width: auto;
 }
-
-/* texto */
 .logo-container span {
   font-size: 1.4rem;
   font-weight: 400;
   color: #ffffff;
+}
+
+/*RESPONSIVIDADE*/
+@media (max-width: 600px) {
+  header {
+    padding: 14px 20px;
+  }
+
+  .logo-container {
+    gap: 5px;
+  }
+
+  .logo-container img {
+    height: 34px;
+  }
+
+  .logo-container span {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo-container img {
+    height: 30px;
+  }
+
+  .logo-container span {
+    font-size: 1.05rem;
+  }
 }

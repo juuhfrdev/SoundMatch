@@ -6,7 +6,6 @@
   width: 100%;
 }
 
-/* INPUT */
 .search-container input {
   width: 400px;
   max-width: 100%;
@@ -20,18 +19,14 @@
   transition: 0.25s ease;
   backdrop-filter: blur(4px);
 }
-
 .search-container input::placeholder {
   color: #C8ACD6;
 }
-
-/* BRILHINHO */
 .search-container input:focus {
   border-color: #C8ACD6;
   box-shadow: 0 0 0 3px rgba(200, 172, 214, 0.12);
 }
 
-/* BUTTON */
 .search-container button {
   padding: 12px 28px;
   border: none;
@@ -44,14 +39,37 @@
   cursor: pointer;
   transition: 0.25s ease;
 }
-
 .search-container button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(67, 61, 139, 0.4);
 }
-
-/*BUTTON DESABILITADO*/
 .search-container button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/*RESPONSIVIDADE*/
+@media (max-width: 768px) {
+  .search-container {
+    gap: 12px;
+  }
+
+  .search-container input {
+    width: 100%;
+    font-size: 15px;
+    padding: 16px;
+  }
+
+  .search-container button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    font-size: 15px;
+  }
+}
+@media (max-width: 480px) {
+  .search-container {
+    width: 100%;
+    padding: 0 12px;
+  }
 }

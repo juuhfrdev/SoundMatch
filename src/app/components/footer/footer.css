@@ -22,7 +22,23 @@
   text-decoration: none;
   margin: 0 6px;
 }
-
 .footer a:hover {
   color: #ffffff;
+}
+
+/*RESPONSIVIDADE*/
+@media (max-width: 600px) {
+  .footer {
+    font-size: 13px;
+    padding: 14px 16px;
+  }
+
+  .footer-api {
+    font-size: 12px;
+  }
+
+  .footer a {
+    display: inline-block;
+    margin: 4px 6px;
+  }
 }

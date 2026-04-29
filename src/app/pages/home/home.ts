@@ -27,6 +27,15 @@ export class HomeComponent {
 
   lastQuery: string = '';
 
+  normalizeText(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\(.*?\)|\[.*?\]/g, '')
+    .replace(/ao vivo|live|remix|version|versão|acústico|acustico/gi, '')
+    .trim();
+}
+
   @ViewChild('resultsSection') resultsSection!: ElementRef;
   
   constructor(
@@ -73,12 +82,16 @@ export class HomeComponent {
         const originalArtist = baseMusic.artist.name;
         const originalTitle = baseMusic.title;
 
+        const cleanArtist = this.normalizeText(originalArtist);
+        const cleanTitle = this.normalizeText(originalTitle);
+
         // 2. Busca músicas parecidas no Last.fm
-        return this.LastfmService.getSimilarTracks(originalTitle, originalArtist).pipe(
+        return this.LastfmService.getSimilarTracks(cleanTitle, cleanArtist).pipe(
           map((lastfmResponse) => ({
             lastfmResponse,
             originalArtist: originalArtist.toLowerCase(),
-            originalTitle: originalTitle.toLowerCase()
+            originalTitle: originalTitle.toLowerCase(),
+            originalArtistName: originalArtist
           }))
         );
       }),
@@ -90,7 +103,28 @@ export class HomeComponent {
         const similarTracks = [...(data.lastfmResponse?.similartracks?.track || [])].sort(() => Math.random() - 0.5);
 
         if (similarTracks.length === 0) {
-          this.errorMessage = 'Nenhuma música parecida encontrada no Last.fm.';
+          return this.musicService.searchArtistTracks(data.originalArtist).pipe(
+          map((artistResponse) => {
+            const candidates = artistResponse?.data?.filter((music: any) => {
+              const sameTitle =
+              music.title.toLowerCase() === data.originalTitle;
+
+              return !sameTitle && music.preview;
+            });
+
+              if (!candidates || candidates.length === 0) {
+                this.errorMessage = 'Não encontrei recomendações com preview para essa música.';
+                return null;
+              }
+
+              const randomIndex = Math.floor(Math.random() * candidates.length);
+              return candidates[randomIndex];
+            })
+          );
+        }
+
+        if (similarTracks.length === 0) {
+          this.errorMessage = 'Nenhuma música parecida encontrada.';
           return of(null);
         }
 
