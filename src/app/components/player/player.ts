@@ -44,7 +44,7 @@ export class Player implements OnChanges, OnDestroy {
     });
   }
 
-  // 🔁 Detecta quando a música muda
+  // Detecta quando a música muda
   ngOnChanges(changes: SimpleChanges) {
     if (changes['previewUrl']) {
 
@@ -70,7 +70,7 @@ export class Player implements OnChanges, OnDestroy {
     }
   }
 
-  // ▶️ / ⏸️ Play / Pause
+  // Play / Pause
   togglePlay() {
     if (!this.previewUrl) return;
 
@@ -81,7 +81,7 @@ export class Player implements OnChanges, OnDestroy {
 
     if (this.audio.paused) {
 
-      // 🛑 Para outro player antes de tocar
+      // Para outro player antes de tocar
       if (Player.currentPlayer && Player.currentPlayer !== this) {
         Player.currentPlayer.stop();
       }
@@ -105,14 +105,14 @@ export class Player implements OnChanges, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  // ⛔ Para o áudio
+  // Para o áudio
   stop() {
     this.audio.pause();
     this.isPlaying = false;
     this.cdr.detectChanges();
   }
 
-  // 🔥 Método global pra parar qualquer player
+  // Método global pra parar qualquer player
   static stopCurrentPlayer() {
     if (Player.currentPlayer) {
       Player.currentPlayer.stop();
@@ -120,7 +120,7 @@ export class Player implements OnChanges, OnDestroy {
     }
   }
 
-  // 🧹 Quando o componente é destruído (ex: nova busca)
+  // Quando o componente é destruído (ex: nova busca)
   ngOnDestroy() {
     this.stop();
 
@@ -129,7 +129,7 @@ export class Player implements OnChanges, OnDestroy {
     }
   }
 
-  // 🎚️ Controle da timeline
+  // Controle da timeline
   seek(event: Event) {
     const input = event.target as HTMLInputElement;
 
@@ -139,7 +139,7 @@ export class Player implements OnChanges, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  // ⏱️ Formata tempo
+  // Formata tempo
   formatTime(time: number): string {
     if (!time || isNaN(time)) return '0:00';
 

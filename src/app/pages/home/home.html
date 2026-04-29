@@ -1,11 +1,12 @@
 <app-header></app-header>
 
 <section class="main">
-  <h1>Descubra músicas que combinam com você</h1>
+  <h1>
+    Descubra músicas que <span class="highlight">combinam</span> com você
+  </h1>
   <p class="subtitle">Encontre novas faixas que dão match com sua música favorita.</p>
 
-  <app-search (onSearch)="handleSearch($event)" [loading]="loading">
-  </app-search>
+  <app-search (onSearch)="handleSearch($event)" [loading]="loading"></app-search>
 
   @if (loading) {
   <p class="loading-text">Buscando músicas...</p>
@@ -15,6 +16,11 @@
   <p class="error-text">{{ errorMessage }}</p>
   }
 
+  <div #resultsSection></div>
+
   <app-results [originalMusic]="originalMusic" [recommendedMusic]="recommendedMusic"
-    (recommendAgain)="handleRecommendAgain()"></app-results>
+    (recommendAgain)="handleRecommendAgain()">
+  </app-results>
+
 </section>
+<app-footer></app-footer>

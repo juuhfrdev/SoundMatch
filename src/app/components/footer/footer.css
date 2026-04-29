@@ -1,0 +1,28 @@
+.footer {
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #bcbcdc;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer-api {
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.footer a {
+  color: #a9a6ff;
+  text-decoration: none;
+  margin: 0 6px;
+}
+
+.footer a:hover {
+  color: #ffffff;
+}

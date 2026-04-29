@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { finalize, switchMap, map } from 'rxjs/operators';
 import { of, from } from 'rxjs';
@@ -9,10 +9,12 @@ import { Player } from '../../components/player/player';
 import { MusicService } from '../../services/dmusic';
 import { LastfmService } from '../../services/lastfm';
 import { Header } from '../../components/header/header';
+import { Footer } from "../../components/footer/footer";
+
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, SearchComponent, ResultsComponent, Header],
+  imports: [CommonModule, SearchComponent, ResultsComponent, Header, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -25,6 +27,8 @@ export class HomeComponent {
 
   lastQuery: string = '';
 
+  @ViewChild('resultsSection') resultsSection!: ElementRef;
+  
   constructor(
     private musicService: MusicService,
     private LastfmService:  LastfmService,
@@ -52,7 +56,12 @@ export class HomeComponent {
           return of(null);
         }
 
-        const baseMusic = response.data[0];
+        const baseMusic = response.data.find((music: any) => music.preview);
+
+        if (!baseMusic) {
+          this.errorMessage = 'Encontrei a música, mas ela não tem preview disponível.';
+          return of(null);
+        }
 
         this.originalMusic = {
           title: baseMusic.title,
@@ -138,19 +147,25 @@ export class HomeComponent {
         this.cdr.detectChanges();
       })
 
-    ).subscribe({
-      next: (rec) => {
-        if (!rec || this.recommendedMusic) return;
+    ).subscribe({next: (rec) => {
+    if (!rec || this.recommendedMusic) return;
 
-        this.recommendedMusic = rec;
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error(err);
-        this.errorMessage = 'Erro ao gerar recomendação.';
-        this.cdr.detectChanges();
-      }
-    });
+    this.recommendedMusic = rec;
+    this.cdr.detectChanges();
+
+    setTimeout(() => {
+      this.resultsSection?.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 100);
+  },
+  error: (err) => {
+    console.error(err);
+    this.errorMessage = 'Erro ao gerar recomendação.';
+    this.cdr.detectChanges();
+  }
+});
   }
   handleRecommendAgain() {
     if (!this.lastQuery) return;

@@ -8,7 +8,7 @@
 
 /* INPUT */
 .search-container input {
-  width: 360px;
+  width: 400px;
   max-width: 100%;
   padding: 14px 18px;
   border-radius: 12px;
@@ -36,7 +36,8 @@
   padding: 12px 28px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(90deg, #433D8B 0%, #6a5db4 100%);
+  margin-top: 20px;
+  background: linear-gradient(90deg, #4DA6FF 0%, #7C8CFF 100%);
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
