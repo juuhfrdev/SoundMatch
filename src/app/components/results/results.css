@@ -91,44 +91,27 @@
 
 /*RESPONSIVIDADE*/
 @media (max-width: 768px) {
-  .results-container {
-    margin-top: 32px;
-    max-width: 100%;
-    padding: 0 16px;
-  }
-
-  .results-container h2 {
-    font-size: 1.4rem;
-    margin-bottom: 22px;
+  .music-card {
+    max-width: 300px;
+    padding: 16px;
+    margin: 0 auto;
   }
 
   .match-container {
     flex-direction: column;
     align-items: center;
-    gap: 24px;
-  }
-
-  .music-card {
-    width: 100%;
-    max-width: 360px;
-    min-width: 0;
-    padding: 18px;
+    gap: 20px;
   }
 
   .image-container {
-    height: 260px;
+    height: 220px;
   }
 
-  .music-card:hover {
-    transform: none;
+  .music-card h3 {
+    font-size: 15px;
   }
 
-  .music-card:hover img {
-    transform: none;
-  }
-
-  .results-container button {
-    width: 100%;
-    max-width: 360px;
+  .music-card p {
+    font-size: 13px;
   }
 }
