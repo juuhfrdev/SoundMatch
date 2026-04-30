@@ -96,4 +96,4 @@ ng serve -o
 ## 🌐 Demo
 Acesse em:
 
-*em breve*
+https://juuhfrdev.github.io/SoundMatch/
