@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LastfmService {
-  private apiKey = 'de21a4cf72c8a34cc373644f7c70e9b9';
+  private apiKey = environment.lastfmApiKey;
   private apiUrl = 'https://ws.audioscrobbler.com/2.0/';
 
   constructor(private http: HttpClient) {}
