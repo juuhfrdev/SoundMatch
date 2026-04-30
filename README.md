@@ -9,7 +9,7 @@ A aplicação utiliza APIs externas para gerar recomendações inteligentes e re
 ## 📸 Preview
 
 <p align="center">
-  <img src="assets/soundmatch-preview.gif" width="600">
+  <img src="src/assets/soundmatch-preview.gif" width="600">
 </p>
 
 ---
@@ -53,25 +53,6 @@ A aplicação utiliza APIs externas para gerar recomendações inteligentes e re
 - Componentização com Angular  
 - Layout pensado para desktop e mobile  
 - Feedback visual com animações e estados de loading  
-
----
-
-## 📂 Estrutura do projeto
-
-src/
-├── app/
-│ ├── components/
-│ │ ├── header/
-│ │ ├── search/
-│ │ ├── results/
-│ │ ├── player/
-│ │ └── footer/
-│ ├── pages/
-│ │ └── home/
-│ ├── services/
-│ │ ├── dmusic.ts
-│ │ └── lastfm.ts
-├──assets/
 
 ---
 
